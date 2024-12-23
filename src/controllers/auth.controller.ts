@@ -1,5 +1,6 @@
-import { Request, Response } from 'express';
-import * as Yup from 'yup';
+import { Request, Response } from "express";
+import * as Yup from "yup";
+import UserModel from "../models/user.model";
 
 // regis data type
 type TRegister = {
@@ -16,7 +17,9 @@ const registerValidateSchema = Yup.object({
   username: Yup.string().required(),
   email: Yup.string().email().required(),
   password: Yup.string().required(),
-  confirmPassword: Yup.string().required().oneOf([Yup.ref("password"), ""], "Password not match"), // validate password
+  confirmPassword: Yup.string()
+    .required()
+    .oneOf([Yup.ref("password"), ""], "Password not match"), // validate password
 });
 
 export default {
@@ -33,13 +36,16 @@ export default {
         confirmPassword,
       });
 
+      const result = await UserModel.create({
+        fullName,
+        username,
+        email,
+        password,
+      });
+
       res.status(200).json({
-        message: 'Success regstration',
-        data: {
-          fullName,
-          username,
-          email,
-        },
+        message: "Success regstration",
+        data: result,
       });
     } catch (error) {
       const err = error as unknown as Error;
