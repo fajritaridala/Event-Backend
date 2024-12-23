@@ -1,9 +1,12 @@
 import express from 'express';
+import bodyParser from 'body-parser';
 import router from './routes/api';
 
-const app = express();
 const PORT = 3000;
 const HOST = 'localhost';
+
+const app = express();
+app.use(bodyParser.json()); // receive a json req
 
 // middleware
 app.use('/api', router);
