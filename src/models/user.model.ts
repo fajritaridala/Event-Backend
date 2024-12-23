@@ -60,6 +60,13 @@ UserSchema.pre("save", function (next) {
   next();
 });
 
+// does not display the password at login
+UserSchema.methods.toJSON = function () {
+  const user = this.toObject();
+  delete user.password;
+  return user;
+};
+
 const UserModel = mongoose.model("User", UserSchema); // User will save as a table name and UserSchema is a table structure
 
 export default UserModel;
