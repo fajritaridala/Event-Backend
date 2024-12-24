@@ -7,7 +7,7 @@ export interface User {
   email: string;
   password: string;
   role: string;
-  profilePictures: string;
+  profilePicture: string;
   isActive: boolean;
   activationCode: string;
 }
@@ -37,7 +37,7 @@ const UserSchema = new Schema<User>(
       enum: ["admin", "user"],
       default: "user",
     },
-    profilePictures: {
+    profilePicture: {
       type: Schema.Types.String,
       default: "user.jpg",
     },
