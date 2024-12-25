@@ -1,5 +1,8 @@
 import mongoose from "mongoose";
 import { encrypt } from "../utils/encryption";
+import { renderMailHtml, sendEmail } from "../utils/mail/mail";
+import { render } from "ejs";
+import { CLIENT_HOST, EMAIL_SMTP_USER } from "../utils/env";
 
 export interface User {
   fullName: string;
@@ -10,6 +13,7 @@ export interface User {
   profilePicture: string;
   isActive: boolean;
   activationCode: string;
+  createdAt?: string;
 }
 
 const Schema = mongoose.Schema;
@@ -58,6 +62,32 @@ UserSchema.pre("save", function (next) {
   const user = this;
   user.password = encrypt(user.password);
   next();
+});
+
+UserSchema.post("save", async function (doc, next) {
+  try {
+    const user = doc;
+    console.log("Send Email to: ", user.email);
+
+    const contentEmail = await renderMailHtml("registration-success.ejs", {
+      username: user.username,
+      fullName: user.fullName,
+      email: user.email,
+      createdAt: user.createdAt,
+      activationLink: `${CLIENT_HOST}/auth/activation?code=${user.activationCode}`,
+    });
+
+    await sendEmail({
+      from: EMAIL_SMTP_USER,
+      to: user.email,
+      subject: "Activation your Account",
+      html: contentEmail,
+    });
+  } catch (error) {
+    console.log("Error > ", error);
+  } finally {
+    next();
+  }
 });
 
 // does not display the password at login
