@@ -30,6 +30,16 @@ const doc = {
         identifier: "fadjritaridala@gmail.com",
         password: "fadjriajh19",
       },
+      RegisterRequest: {
+        fullName: "Muh. Fadjri Taridala",
+        username: "fadjritaridala",
+        email: "c206b4ky2610@bangkit.academy",
+        password: "fadjri1234",
+        confirmPassword: "fadjri1234",
+      },
+      ActivationRequest: {
+        code: "abc"
+      }
     },
   },
 };
