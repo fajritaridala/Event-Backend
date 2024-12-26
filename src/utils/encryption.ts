@@ -1,6 +1,7 @@
 import crypto from "crypto";
 import { SECRET } from "./env";
 
+// Encrypt password to store in the database
 export const encrypt = (password: string): string => {
   const encrypted = crypto
     .pbkdf2Sync(password, SECRET, 1000, 64, "sha512")

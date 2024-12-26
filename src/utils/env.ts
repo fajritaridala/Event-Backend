@@ -3,6 +3,7 @@ import { boolean } from "yup";
 
 dotenv.config();
 
+// This file is used to store all the environment variables
 export const DATABASE_URL: string = process.env.DATABASE_URL || "";
 export const SECRET: string = process.env.SECRET || "";
 export const EMAIL_SMTP_SECURE: boolean =

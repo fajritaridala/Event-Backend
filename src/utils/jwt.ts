@@ -3,6 +3,7 @@ import { User } from "../models/user.model";
 import jwt from "jsonwebtoken";
 import { SECRET } from "./env";
 
+// User token to be used in the token
 export interface IUserToken
   extends Omit<
     User,
@@ -17,7 +18,7 @@ export interface IUserToken
   id?: Types.ObjectId;
 }
 
-// create token
+// generate token
 export const generateToken = (user: IUserToken): string => {
   const token = jwt.sign(user, SECRET, {
     expiresIn: "1h",
@@ -25,7 +26,7 @@ export const generateToken = (user: IUserToken): string => {
   return token;
 };
 
-// get user data
+// get user data from token
 export const getUserData = (token: string) => {
   const user = jwt.verify(token, SECRET) as IUserToken;
   return user;

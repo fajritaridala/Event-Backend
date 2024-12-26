@@ -4,6 +4,7 @@ import { renderMailHtml, sendEmail } from "../utils/mail/mail";
 import { render } from "ejs";
 import { CLIENT_HOST, EMAIL_SMTP_USER } from "../utils/env";
 
+// This interface is used to extend the User model
 export interface User {
   fullName: string;
   username: string;
@@ -16,8 +17,10 @@ export interface User {
   createdAt?: string;
 }
 
+// This interface is used to extend the User model
 const Schema = mongoose.Schema;
 
+// This schema will be used to create the User model
 const UserSchema = new Schema<User>(
   {
     fullName: {
@@ -60,6 +63,7 @@ const UserSchema = new Schema<User>(
   }
 );
 
+// This hook will be called before saving the user
 UserSchema.pre("save", function (next) {
   const user = this;
   user.password = encrypt(user.password);
@@ -67,6 +71,7 @@ UserSchema.pre("save", function (next) {
   next();
 });
 
+// This hook will be called after saving the user
 UserSchema.post("save", async function (doc, next) {
   try {
     const user = doc;
@@ -100,6 +105,7 @@ UserSchema.methods.toJSON = function () {
   return user;
 };
 
+// This will create a User model
 const UserModel = mongoose.model("User", UserSchema); // User will save as a table name and UserSchema is a table structure
 
 export default UserModel;

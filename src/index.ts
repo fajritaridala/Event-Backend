@@ -7,18 +7,19 @@ import docs from "./docs/route";
 
 async function init() {
   try {
-    // connect to db
+    // Connect to the database
     const result = await db();
     console.log("Database status: ", result);
 
     const PORT = 3000;
     const HOST = "localhost";
 
+    // Create an express app
     const app = express();
     app.use(cors())
     app.use(bodyParser.json()); // receive a json req
 
-    // middleware
+    // Create a simple route
     app.get("/", (req, res) => {
       res.status(200).json({
         message: "Server is running",
@@ -26,9 +27,11 @@ async function init() {
       });
     });
 
+    // Use the router
     app.use("/api", router);
     docs(app);
 
+    // Start the server
     app.listen(PORT, () => {
       console.log(`Server is running on http://${HOST}:${PORT}`);
     });

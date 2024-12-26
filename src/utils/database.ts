@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 import { DATABASE_URL } from "./env";
 
-// connect to db
+// Connect to the database
 const connect = async () => {
   try {
     await mongoose.connect(DATABASE_URL, {

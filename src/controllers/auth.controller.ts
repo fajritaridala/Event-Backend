@@ -5,13 +5,13 @@ import { encrypt } from "../utils/encryption";
 import { generateToken } from "../utils/jwt";
 import { IReqUser } from "../middlewares/auth.middleware";
 
-// login data
+// login data type
 type TLogin = {
   identifier: string;
   password: string;
 };
 
-// regis data type
+// register data type
 type TRegister = {
   fullName: string;
   username: string;
@@ -20,7 +20,7 @@ type TRegister = {
   confirmPassword: string;
 };
 
-// validate a data registers
+// register validation schema to validate the data
 const registerValidateSchema = Yup.object({
   fullName: Yup.string().required(),
   username: Yup.string().required(),
@@ -57,10 +57,13 @@ export default {
       schema: {$ref: "#/components/schemas/RegisterRequest"}
     }
      */
+
+    // get data from request body
     const { fullName, username, email, password, confirmPassword } =
       req.body as unknown as TRegister;
 
     try {
+      // validate the data
       await registerValidateSchema.validate({
         fullName,
         username,
@@ -69,6 +72,7 @@ export default {
         confirmPassword,
       });
 
+      // check if the email already exists
       const result = await UserModel.create({
         fullName,
         username,
@@ -98,11 +102,12 @@ export default {
       schema: {$ref: "#/components/schemas/LoginRequest"}
     }
      */
+
+    // get data from request body
     const { identifier, password } = req.body as unknown as TLogin;
 
     try {
-      // get user data by "identifier" -> email && username
-
+      // check if the user exists
       const userByIdentifier = await UserModel.findOne({
         $or: [
           {
@@ -115,6 +120,7 @@ export default {
         isActive: true,
       });
 
+      // if user not found
       if (!userByIdentifier) {
         return res.status(403).json({
           message: "User not found",
@@ -122,10 +128,11 @@ export default {
         });
       }
 
-      // password validate
+      // validate the password
       const validatePassword: boolean =
         encrypt(password) === userByIdentifier.password;
 
+      // if password not match
       if (!validatePassword) {
         return res.status(403).json({
           message: "User not found",
@@ -133,6 +140,7 @@ export default {
         });
       }
 
+      // generate token
       const token = generateToken({
         id: userByIdentifier._id,
         role: userByIdentifier.role,
@@ -152,7 +160,7 @@ export default {
     }
   },
 
-  // user endpoint
+  // get user profile endpoint
   async me(req: IReqUser, res: Response) {
     /**
     #swagger.tags = ["Auth"]
@@ -177,7 +185,7 @@ export default {
     }
   },
 
-  // activation endpoint
+  // activate user endpoint
   async activation(req: Request, res: Response) {
     /**
     #swagger.tags = ["Auth"]
@@ -187,6 +195,7 @@ export default {
     }
      */
     try {
+      // get activation code from request body
       const { code } = req.body as { code: string };
 
       const user = await UserModel.findOneAndUpdate(

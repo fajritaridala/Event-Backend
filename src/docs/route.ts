@@ -4,6 +4,7 @@ import swaggerOutput from "./swagger_output.json";
 import fs from "fs";
 import path from "path";
 
+// This function will be called in the main file
 export default function docs(app: Express) {
   const css = fs.readFileSync(
     path.resolve(
@@ -13,6 +14,7 @@ export default function docs(app: Express) {
     "utf-8"
   );
 
+  // Serve the swagger documentation
   app.use(
     "/api-docs",
     swaggerUi.serve,

@@ -10,6 +10,7 @@ import {
   EMAIL_SMTP_PASS,
 } from "../env";
 
+// transporter to send email
 const transporter = nodemailer.createTransport({
   service: EMAIL_SMTP_SERVICE_NAME,
   host: EMAIL_SMTP_HOST,
@@ -22,6 +23,7 @@ const transporter = nodemailer.createTransport({
   requireTLS: true,
 });
 
+// Interface for sendMail
 export interface ISendMail {
   from: string;
   to: string;
@@ -29,6 +31,7 @@ export interface ISendMail {
   html: string;
 }
 
+// sendMail
 export const sendEmail = async ({ ...mailParams }: ISendMail) => {
   const result = await transporter.sendMail({
     ...mailParams,
@@ -36,7 +39,7 @@ export const sendEmail = async ({ ...mailParams }: ISendMail) => {
   return result;
 };
 
-// renderHtml
+// renderMailHtml
 export const renderMailHtml = async (template: string, data: any): Promise<string> => {
   const content = await ejs.renderFile(
     path.join(__dirname, `templates/${template}`),
