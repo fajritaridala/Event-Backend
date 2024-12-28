@@ -163,7 +163,7 @@
           },
           "password": {
             "type": "string",
-            "example": "fadjriajh19"
+            "example": "Fadjriajh1234"
           }
         },
         "xml": {
@@ -183,15 +183,15 @@
           },
           "email": {
             "type": "string",
-            "example": "c206b4ky2610@bangkit.academy"
+            "example": "fadjritaridala@gmail.com"
           },
           "password": {
             "type": "string",
-            "example": "fadjri1234"
+            "example": "Fadjri1234"
           },
           "confirmPassword": {
             "type": "string",
-            "example": "fadjri1234"
+            "example": "Fadjri1234"
           }
         },
         "xml": {
@@ -203,7 +203,7 @@
         "properties": {
           "code": {
             "type": "string",
-            "example": "abc"
+            "example": "paste code activation in here"
           }
         },
         "xml": {
