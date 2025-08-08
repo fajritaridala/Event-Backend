@@ -3,6 +3,7 @@ import { encrypt } from "../utils/encryption";
 import { renderMailHtml, sendEmail } from "../utils/mail/mail";
 import { render } from "ejs";
 import { CLIENT_HOST, EMAIL_SMTP_USER } from "../utils/env";
+import { ROlES } from "../utils/constant";
 
 // This interface is used to extend the User model
 export interface User {
@@ -43,8 +44,8 @@ const UserSchema = new Schema<User>(
     },
     role: {
       type: Schema.Types.String,
-      enum: ["admin", "user"],
-      default: "user",
+      enum: [ROlES.ADMIN, ROlES.MEMBER],
+      default: ROlES.MEMBER,
     },
     profilePicture: {
       type: Schema.Types.String,
