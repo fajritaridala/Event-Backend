@@ -11,7 +11,7 @@ async function init() {
     const result = await db();
     console.log("Database status: ", result);
 
-    const PORT = 3000;
+    const PORT = 5500;
     const HOST = "localhost";
 
     // Create an express app

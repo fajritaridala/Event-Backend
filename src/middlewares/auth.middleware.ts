@@ -1,10 +1,6 @@
 import { NextFunction, Request, Response } from "express";
-import { getUserData, IUserToken } from "../utils/jwt";
-
-// This interface is used to extend the Request interface
-export interface IReqUser extends Request {
-  user?: IUserToken;
-}
+import { getUserData } from "../utils/jwt";
+import { IReqUser } from "../utils/interfaces";
 
 // This middleware will check if the user is authenticated
 export default (req: Request, res: Response, next: NextFunction) => {
