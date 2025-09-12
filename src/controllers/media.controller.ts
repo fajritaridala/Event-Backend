@@ -8,7 +8,6 @@ export default {
     if (!req.file) {
       return response.error(res, null, "file not found");
     }
-    console.log(req.file);
     try {
       const result = await uploader.uploadSingle(
         req.file as Express.Multer.File

@@ -60,6 +60,7 @@ export default {
      */
 
     // get data from request body
+    console.log(req.body  )
     const { fullName, username, email, password, confirmPassword } =
       req.body as unknown as TRegister;
 

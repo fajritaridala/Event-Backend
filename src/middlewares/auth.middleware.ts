@@ -14,7 +14,7 @@ export default (req: Request, res: Response, next: NextFunction) => {
   // Split the authorization header to get the token
   const [prefix, accessToken] = authorization.split(" ");
 
-  if (!(prefix === "Bearer" && accessToken)) {
+  if (!(prefix === "bearer" || prefix === "Bearer" && accessToken)) {
     return response.unauthorized(res);
   }
 
