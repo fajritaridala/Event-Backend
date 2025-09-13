@@ -38,8 +38,30 @@ const doc = {
         confirmPassword: "fadjri1234",
       },
       ActivationRequest: {
-        code: "abc"
-      }
+        code: "abc",
+      },
+      CreateCategoryRequest: {
+        name: "",
+        description: "",
+        icon: "",
+      },
+      CreateEventRequest: {
+        name: "",
+        banner: "fileUrl",
+        category: "category ObjectId",
+        description: "",
+        startDate: "yyyy-mm-dd hh:mm:ss",
+        endDate: "yyyy-mm-dd hh:mm:ss",
+        location: {
+          region: "region id",
+          coordinate: [0, 0],
+        },
+        isOnline: false,
+        isFeatured: true,
+      },
+      RemoveMediaRequest: {
+        fileUrl: "",
+      },
     },
   },
 };
